@@ -63,24 +63,24 @@ def imprimir_factura(cliente, carrito):
     factura.append(Facturas(cliente.nombre, cliente.correo, cliente.NIT, carrito, total_pagar, total_impuesto))
 
 def realizar_compra():
+    carrito = []  
     cliente = seleccionar_cliente()
     if cliente is not None:
-        carrito = defaultdict(int)
         menu_compra_opcion = input("Seleccione una opción:\n1. Comprar\n2. Terminar Compra y facturar\n")
         while menu_compra_opcion != "2":
             print("-----Menú Compra-----")
             for i, producto in enumerate(productos):
                 print(f"{i}. Codigo: {producto.codigo} Nombre: {producto.nombre}, Precio: Q{int(producto.precio)}, Descripción: {producto.descripcion}")
             codigo_producto = input("Ingrese el código del producto: ")
-            if codigo_producto.isdigit() and 0 <= int(codigo_producto) < len(productos):
+            if codigo_producto.isdigit() and int(codigo_producto) < len(productos):
                 cantidad_compra = input("Ingrese la cantidad que desea comprar: ")
-                carrito[productos[int(codigo_producto)]] += int(cantidad_compra)
+                carrito.append((productos[int(codigo_producto)], int(cantidad_compra)))  
                 print("Producto agregado al carrito")
             else:
                 print("Código de producto inválido. Por favor, ingrese un número válido.")
             menu_compra_opcion = input("Seleccione una opción:\n1. Comprar\n2. Terminar Compra y facturar\n")
         print("Compra finalizada, imprimiendo factura...")
-        imprimir_factura(cliente, carrito.items())
+        imprimir_factura(cliente, carrito) 
 
 def generar_reporte_facturas():
     print("-----Reporte de Facturas-----")

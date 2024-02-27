@@ -3,3 +3,5 @@ class Cliente:
         self.nombre = nombre
         self.correo = correo
         self.NIT = NIT
+
+list ()
